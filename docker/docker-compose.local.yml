@@ -1,0 +1,21 @@
+services:
+  react_app:
+    container_name: test_react
+    networks:
+      - test_react_default
+    build:
+      context: .
+      dockerfile: ./docker/local/app.dockerfile
+    environment:
+      - VITE_EXTERNAL_SERVER_URL=${VITE_EXTERNAL_SERVER_URL}
+      - VITE_DEV_SERVER_URL_LOCAL=${VITE_DEV_SERVER_URL_LOCAL}
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    restart: unless-stopped
+
+networks:
+  test_react_default:
+    driver: bridge
