@@ -16,7 +16,7 @@ Sigue estos pasos para configurar el proyecto localmente.
 1. **Clona el repositorio:**
 
    ```bash
-   git clone https://github.com/tu-usuario/tu-repositorio.git
+   git clone https://github.com/ramosestudiante/Test-React.git
    cd tu-repositorio
 
 2. **Copia el .env.example:**
@@ -27,13 +27,14 @@ Sigue estos pasos para configurar el proyecto localmente.
 3. **Inicia el proyecto con:**
 
    ```
-   npm i
-   ``` 
    para instalar todas las dependencias
+   npm i
+   ```
+
+   para levantar el proyecto
    ```
    npm run dev 
    ```
-   para levantar el proyecto
 
 
 ## Inicia con Docker
@@ -41,11 +42,12 @@ Sigue estos pasos para configurar el proyecto localmente.
  **En el proyecto hay un makeFile:**
 
    Este makeFile es un archivo de script para automatizar el trabajo con Docker:
+   
+   incias el contenedor de docker para este proyecto
+   el cual instala las dependencias que estan en el proyecto y con la version de node utilizada
    ```
    make run-local 
    ```
-   incias el contenedor de docker para este proyecto
-   el cual instala las dependencias que estan en el proyecto y con la version de node utilizada
 
 
 ## Decisiones Técnicas y Arquitectónicas
