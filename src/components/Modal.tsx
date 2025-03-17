@@ -25,7 +25,7 @@ const Modal: React.FC<ModalProps> = ({ open, setOpen, handleSubmit }) => {
 
   return (
     <Transition show={open} as={Fragment}>
-      <Dialog as="div" className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30" onClose={() => {}}>
+      <Dialog as="div" className="fixed inset-0 z-50 flex items-center justify-center bg-blue-50 bg-opacity-1" onClose={() => {}}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

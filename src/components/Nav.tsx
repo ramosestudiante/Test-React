@@ -1,18 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export const Nav = () => {
   return (
     <nav className="bg-blue-400 p-5 shadow-md">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Logo o título del Navbar */}
-        <div className="text-white text-xl font-bold">
-          <span>Test Front React</span>
+      <div className=" flex justify-between items-center">
+        <div className="flex-1">
+          <span className="text-white text-xl font-bold">Test Front React</span>
         </div>
 
-        {/* Contenedor para alinear los enlaces a la derecha */}
-        <div className="flex gap-4 ml-auto text-white">
-          <Link to={'/'}>Inicio</Link>
-          <Link to={'/favorites'}>Favoritos</Link>
+        <div className="flex gap-5 text-white ml-auto">
+          <Link to={"/"}>Inicio</Link>
+          <Link to={"/favorites"}>Favoritos</Link>
         </div>
       </div>
     </nav>

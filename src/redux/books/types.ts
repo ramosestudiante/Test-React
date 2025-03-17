@@ -10,7 +10,7 @@ export interface Book {
   subRows?: Book[];
 }
 export interface BookState {
-  favorites: Book[]; // ⬅️ Cambia esto de `[]` a `Book[]`
+  favorites: Book[];
   isFetching: boolean;
   books: {
     data: Book[];
@@ -22,6 +22,8 @@ export interface BookState {
     results: Book[];
     filterQuery: string;
   };
+  error:string|null,
+  loading:boolean,
   selectedBook: Book | null;
 }
 

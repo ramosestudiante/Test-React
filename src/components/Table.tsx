@@ -32,8 +32,6 @@ const DataTable: React.FC<DataTableProps> = ({
     desc: false,
   });
   const favorites = useSelector((state: RootState) => state.books.favorites);
-  console.log('favoritess', favorites);
-  
 
   const sortedData = useMemo(() => {
     return [...data].sort((a, b) => {
@@ -66,7 +64,7 @@ const DataTable: React.FC<DataTableProps> = ({
           <div className="flex items-center space-x-2">
             <Link
               title="Ver detalles del libro"
-              className="text-blue-500 hover:text-blue-700"
+              className="text-indigo-600 hover:text-indigo-800"
               to={`/detail/${row.original.id}`}
             >
               <EyeIcon className="inline-block w-5 h-5 mr-1" />
@@ -74,23 +72,22 @@ const DataTable: React.FC<DataTableProps> = ({
             {isFavoritesView ? (
               <button
                 onClick={() => onRemoveFromFavorites?.(row.original.title)}
-                 data-testid="remove-button"
+                className="text-red-600 hover:text-red-800"
+                aria-label="Eliminar de favoritos"
               >
-                <TrashIcon className="w-5 h-5 text-red-500 hover:text-red-700" />
+                <TrashIcon className="w-5 h-5" />
               </button>
             ) : (
               <button
                 onClick={() => onAddToFavorites?.(row.original.title)}
+                className={`${
+                  favorites.some((fav) => fav.title === row.original.title)
+                    ? "text-red-600 hover:text-red-800"
+                    : "text-gray-500 hover:text-gray-700"
+                }`}
                 aria-label="Agregar a favoritos"
               >
-                <HeartIcon
-                data-testid="remove-button"
-                  className={`w-5 h-5 ${
-                    favorites.some((fav) => fav.title === row.original.title)
-                      ? "text-red-500"
-                      : "text-gray-500"
-                  } hover:text-red-500`}
-                />
+                <HeartIcon className="w-5 h-5" />
               </button>
             )}
           </div>
@@ -117,12 +114,12 @@ const DataTable: React.FC<DataTableProps> = ({
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 overflow-x-auto">
       <table
         {...getTableProps()}
-        className="min-w-full border border-gray-300 shadow-md mt-5"
+        className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md"
       >
-        <thead className="bg-gray-100">
+        <thead className="bg-gray-50">
           {headerGroups.map((headerGroup) => {
             const { key, ...restHeaderGroupProps } =
               headerGroup.getHeaderGroupProps();
@@ -134,13 +131,17 @@ const DataTable: React.FC<DataTableProps> = ({
                     <th
                       key={key}
                       {...restHeaderProps}
-                      className="py-2 px-4 text-left border-r last:border-r-0 cursor-pointer"
+                      className="py-3 px-6 text-left text-sm font-medium text-gray-700 cursor-pointer"
                       onClick={() => handleSort(column.id)}
                     >
-                      {column.render("Header")}
-                      {sortBy.id === column.id && (
-                        <span className="ml-2">{sortBy.desc ? "↓" : "↑"}</span>
-                      )}
+                      <div className="flex items-center justify-between">
+                        {column.render("Header")}
+                        {sortBy.id === column.id && (
+                          <span className="ml-2 text-xs">
+                            {sortBy.desc ? "↓" : "↑"}
+                          </span>
+                        )}
+                      </div>
                     </th>
                   );
                 })}
@@ -175,7 +176,7 @@ const DataTable: React.FC<DataTableProps> = ({
                 <tr
                   key={key}
                   {...restRowProps}
-                  className="border-b hover:bg-gray-50"
+                  className="hover:bg-gray-100 transition-colors duration-200"
                 >
                   {row.cells.map((cell) => {
                     const { key, ...restCellProps } = cell.getCellProps();
@@ -183,7 +184,7 @@ const DataTable: React.FC<DataTableProps> = ({
                       <td
                         key={key}
                         {...restCellProps}
-                        className="py-2 px-4 border-r last:border-r-0"
+                        className="py-3 px-6 text-sm text-gray-600 border-t border-gray-200"
                       >
                         {cell.render("Cell")}
                       </td>

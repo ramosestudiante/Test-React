@@ -4,7 +4,6 @@ import { Meta, StoryFn } from '@storybook/react';
 import Detail from '../Detail';
 import bookReducer from '../../redux/books/reducers';
 
-// Configuración del store
 const mockStore = configureStore({
   reducer: {
     books: bookReducer,
@@ -61,8 +60,8 @@ LoadingState.decorators = [
       },
       preloadedState: {
         books: {
-          selectedBook: null, // No hay libro seleccionado
-          isFetching: true,   // Estado de carga
+          selectedBook: null,
+          isFetching: true,
           favorites: [],
           books: {
             data: [],
@@ -91,8 +90,8 @@ NoBookFound.decorators = [
       },
       preloadedState: {
         books: {
-          selectedBook: null,  // No hay libro seleccionado
-          isFetching: false,   // Estado no de carga
+          selectedBook: null,
+          isFetching: false,
           favorites: [],
           books: {
             data: [],

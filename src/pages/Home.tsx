@@ -13,7 +13,7 @@ interface LayoutProps {
 
 export const Home: React.FC<LayoutProps> = () => {
   const dispatch = useDispatch();
-  const { books, favorites } = useSelector((store: RootState) => store.books);
+  const { books, loading, error } = useSelector((store: RootState) => store.books);
   const { filterQuery } = books;
 
   const [open, setOpen] = useState(false);
@@ -24,7 +24,6 @@ export const Home: React.FC<LayoutProps> = () => {
     publicationDate: "",
   });
 
-  // Definir `booksAll` antes de usarlo
   const booksAll = useMemo(() => (Array.isArray(books.data) ? books.data : []), [books.data]);
 
   useEffect(() => {
@@ -52,10 +51,7 @@ export const Home: React.FC<LayoutProps> = () => {
     }
   };
 
-  useEffect(() => {
-    // Obtén los libros de los favoritos al iniciar la página
-    dispatch(getBooks({}));
-  }, [dispatch, favorites])
+
 
   const handleSelect = (book: Book) => {
     dispatch(
@@ -76,7 +72,6 @@ export const Home: React.FC<LayoutProps> = () => {
 
   const handleSubmit = () => {
     console.log("Nuevo libro agregado: ", newBook);
-    // Aquí podrías llamar a una acción Redux para añadir el libro.
     setOpen(false);
   };
 
@@ -94,7 +89,13 @@ export const Home: React.FC<LayoutProps> = () => {
           </button>
         </div>
         <div className="w-full p-4">
-          <Table data={filteredBooks} loading={false} onAddToFavorites={handleAddToFavorites} />
+          {loading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <div className="text-red-500">{error}</div>
+          ) : (
+            <Table data={filteredBooks} loading={false} onAddToFavorites={handleAddToFavorites} />
+          )}
         </div>
       </div>
       <Modal open={open} setOpen={setOpen} handleChange={handleChange} handleSubmit={handleSubmit} />

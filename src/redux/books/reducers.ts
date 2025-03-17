@@ -15,6 +15,8 @@ const initialState: BookState = {
   isFetching: false,
   selectedBook: null,
   favorites: [],
+  error: null,
+  loading: false,
 };
 
 const bookSlice = createSlice({
@@ -23,6 +25,7 @@ const bookSlice = createSlice({
   reducers: {
     getBooks: (state, action: PayloadAction<{ query?: string } | undefined>) => {
       state.books.isFetching = true;
+      state.loading = true;
       if (action.payload?.query) {
         state.books.filterQuery = action.payload.query;
       }
@@ -34,6 +37,7 @@ const bookSlice = createSlice({
         results: action.payload.books ? action.payload.books.slice(0, 10) : [],
         isFetching: false,
       };
+      state.loading = false;
     },
 
     setFilterQuery: (state, action: PayloadAction<string>) => {
@@ -67,10 +71,12 @@ const bookSlice = createSlice({
     getBookById: (state, action: PayloadAction<{ id: number }>) => {
       state.selectedBook = null; 
       state.books.isFetching = true;
+      state.loading = true;
     },
     fetchedBookById: (state, action: PayloadAction<Book>) => {
       state.selectedBook = action.payload;
       state.books.isFetching = false;
+      state.loading = false;
     },
     addToFavorites: (state, action: PayloadAction<Book>) => {
       const bookExists = state.favorites.some(book => book.name === action.payload.name || book.url === action.payload.url);
@@ -81,10 +87,39 @@ const bookSlice = createSlice({
     removeFromFavorites: (state, action: PayloadAction<string>) => {
       state.favorites = state.favorites.filter(book => book.name !== action.payload);
     },
-    
+
+    fetchBooksError: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    fetchBookByIdError: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
+
     resetState: () => initialState,
   },
 });
 
-export const { getBooks, fetchedBooks, resetState, setFilterQuery, getBookById, fetchedBookById,addToFavorites,removeFromFavorites } = bookSlice.actions;
+export const {
+  getBooks,
+  fetchedBooks,
+  resetState,
+  setFilterQuery,
+  getBookById,
+  fetchedBookById,
+  addToFavorites,
+  removeFromFavorites,
+  fetchBooksError,
+  fetchBookByIdError,
+  setLoading,
+  setError
+} = bookSlice.actions;
+
 export default bookSlice.reducer;

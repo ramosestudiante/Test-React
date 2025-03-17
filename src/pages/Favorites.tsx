@@ -34,7 +34,6 @@ export const Favorites = () => {
         data={formattedFavorites}
         loading={false}
         isFavoritesView={true}
-        favorites={favoriteBooks}
         onRemoveFromFavorites={handleRemoveFromFavorites}
       />
     </div>

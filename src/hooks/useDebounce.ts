@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-// Hook de debounce
 function useDebounce(value: string, delay: number) {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -9,7 +8,6 @@ function useDebounce(value: string, delay: number) {
       setDebouncedValue(value);
     }, delay);
 
-    // Limpiar el timeout cuando el valor cambie o cuando se desmonte el componente
     return () => {
       clearTimeout(handler);
     };

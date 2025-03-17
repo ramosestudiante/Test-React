@@ -6,7 +6,7 @@ import { store } from '../../redux/store';
 import Search from '../Search';
 import { Book } from '../../redux/books/types';
 
-// Define el tipo de las props que espera Search
+// props search
 interface SearchProps {
   onSelect: (book: Book) => void;
   fetchBooks: (query: string) => void;

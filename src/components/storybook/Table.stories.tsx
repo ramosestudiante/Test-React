@@ -72,7 +72,6 @@ const Template: StoryFn = (args) => {
       isFavoritesView={args.isFavoritesView}
       onAddToFavorites={handleAddToFavorites}
       onRemoveFromFavorites={handleRemoveFromFavorites}
-      favorites={favoritesState}
     />
   );
 };
