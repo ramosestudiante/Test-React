@@ -26,12 +26,12 @@ Sigue estos pasos para configurar el proyecto localmente.
 
 3. **Inicia el proyecto con:**
 
+   Para instalar todas las dependencias:
    ```
-   para instalar todas las dependencias
    npm i
    ```
 
-   para levantar el proyecto
+   Para levantar el proyecto:
    ```
    npm run dev 
    ```
