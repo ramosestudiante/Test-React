@@ -1,11 +1,13 @@
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
+import React, { ReactNode } from "react";
 import Table from "../components/Table";
-import { RootState } from "../redux/types";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchedBooks, getBooks, addToFavorites } from "../redux/books/reducers";
+import { useDispatch } from "react-redux";
+import { fetchedBooks } from "../redux/books/reducers";
 import Search from "../components/Search";
 import { Book } from "../redux/books/types";
 import Modal from "../components/Modal";
+import { useBooks } from "../hooks/useBooks";
+import { useModal } from "../hooks/useModal";
+import { useFavorites } from "../hooks/useFavorites";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -13,45 +15,9 @@ interface LayoutProps {
 
 export const Home: React.FC<LayoutProps> = () => {
   const dispatch = useDispatch();
-  const { books, loading, error } = useSelector((store: RootState) => store.books);
-  const { filterQuery } = books;
-
-  const [open, setOpen] = useState(false);
-  const [newBook, setNewBook] = useState({
-    title: "",
-    author: "",
-    genre: "",
-    publicationDate: "",
-  });
-
-  const booksAll = useMemo(() => (Array.isArray(books.data) ? books.data : []), [books.data]);
-
-  useEffect(() => {
-    dispatch(getBooks({}));
-  }, [dispatch]);
-
-  const fetchBooks = (query?: string) => {
-    dispatch(getBooks(query ? { query } : {}));
-  };
-
-  const filteredBooks = useMemo(() => {
-    if (!filterQuery) return booksAll;
-    const query = filterQuery.toLowerCase();
-    return booksAll.filter(
-      (book) =>
-        book.title.toLowerCase().includes(query) ||
-        book.authors?.some((author) => author.toLowerCase().includes(query))
-    );
-  }, [booksAll, filterQuery]);
-
-  const handleAddToFavorites = (name: string) => {
-    const book = booksAll.find((book) => book.name === name);
-    if (book) {
-      dispatch(addToFavorites(book));
-    }
-  };
-
-
+  const { filteredBooks, loading, error, fetchBooks } = useBooks();
+  const { open, setOpen, handleChange, handleSubmit } = useModal();
+  const { handleAddToFavorites } = useFavorites();
 
   const handleSelect = (book: Book) => {
     dispatch(
@@ -63,16 +29,6 @@ export const Home: React.FC<LayoutProps> = () => {
         totalPages: 1,
       })
     );
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setNewBook((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = () => {
-    console.log("Nuevo libro agregado: ", newBook);
-    setOpen(false);
   };
 
   return (
@@ -94,11 +50,20 @@ export const Home: React.FC<LayoutProps> = () => {
           ) : error ? (
             <div className="text-red-500">{error}</div>
           ) : (
-            <Table data={filteredBooks} loading={false} onAddToFavorites={handleAddToFavorites} />
+            <Table
+              data={filteredBooks}
+              loading={false}
+              onAddToFavorites={handleAddToFavorites}
+            />
           )}
         </div>
       </div>
-      <Modal open={open} setOpen={setOpen} handleChange={handleChange} handleSubmit={handleSubmit} />
+      <Modal
+        open={open}
+        setOpen={setOpen}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useTable, useSortBy, Column } from "react-table";
 import { EyeIcon, HeartIcon, TrashIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/types";
+import useSortTable from "../hooks/useSortTable";
+import useFavorites from "../hooks/useFavorites";
 
 interface Book {
   id: number;
@@ -27,12 +27,10 @@ const DataTable: React.FC<DataTableProps> = ({
   onAddToFavorites,
   onRemoveFromFavorites,
 }) => {
-  const [sortBy, setSortBy] = useState<{ id: string; desc: boolean }>({
-    id: "title",
-    desc: false,
-  });
-  const favorites = useSelector((state: RootState) => state.books.favorites);
+  const {sortBy, handleSort} = useSortTable({ id: "title", desc: false });
 
+  const { favorites } = useFavorites();
+  
   const sortedData = useMemo(() => {
     return [...data].sort((a, b) => {
       const aValue = a[sortBy.id as keyof Book];
@@ -74,6 +72,7 @@ const DataTable: React.FC<DataTableProps> = ({
                 onClick={() => onRemoveFromFavorites?.(row.original.title)}
                 className="text-red-600 hover:text-red-800"
                 aria-label="Eliminar de favoritos"
+                data-testid="remove-button"
               >
                 <TrashIcon className="w-5 h-5" />
               </button>
@@ -106,12 +105,12 @@ const DataTable: React.FC<DataTableProps> = ({
       useSortBy
     );
 
-  const handleSort = (columnId: string) => {
-    setSortBy((prev) => ({
-      id: columnId,
-      desc: prev.id === columnId ? !prev.desc : false,
-    }));
-  };
+  // const handleSort = (columnId: string) => {
+  //   setSortBy((prev) => ({
+  //     id: columnId,
+  //     desc: prev.id === columnId ? !prev.desc : false,
+  //   }));
+  // };
 
   return (
     <div className="p-4 overflow-x-auto">

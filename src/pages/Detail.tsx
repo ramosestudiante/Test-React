@@ -5,38 +5,38 @@ import { getBookById } from "../redux/books/reducers";
 import { RootState } from "../redux/store";
 import { faker } from "@faker-js/faker";
 import { addToFavorites, removeFromFavorites } from "../redux/books/reducers";
+import { useBooks } from "../hooks/useBooks";
 
 const Detail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
-  const book = useSelector((state: RootState) => state.books.selectedBook);
   const isFetching = useSelector((state: RootState) => state.books.isFetching);
-  const favorites = useSelector((state: RootState) => state.books.favorites);
-
   const [isFavorite, setIsFavorite] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
   const [synopsis, setSynopsis] = useState("");
   const [rating, setRating] = useState(0);
 
-  const toggleFavorite = () => {
-    if (!book) return;
+  const { booksSelected,favoriteBooks } = useBooks();
 
-    const bookId = Number(book?.url.split("/").pop()) || 0;
+  const toggleFavorite = () => {
+    if (!booksSelected) return;
+
+    const bookId = Number(booksSelected?.url.split("/").pop()) || 0;
 
     const transformedBook = {
-      author: book?.authors?.[0] || "",
-      authors: book?.authors || [],
-      detail: book?.detail || "",
+      author: booksSelected?.authors?.[0] || "",
+      authors: booksSelected?.authors || [],
+      detail: booksSelected?.detail || "",
       id: bookId,
-      name: book?.name || "",
-      publishedDate: book?.publishedDate || "",
-      title: book?.name || "",
-      url: book?.url || "",
+      name: booksSelected?.name || "",
+      publishedDate: booksSelected?.publishedDate || "",
+      title: booksSelected?.name || "",
+      url: booksSelected?.url || "",
     };
 
     if (isFavorite) {
-      dispatch(removeFromFavorites(book.name ?? book.url));
+      dispatch(removeFromFavorites(booksSelected.name ?? booksSelected.url));
     } else {
       dispatch(addToFavorites(transformedBook));
     }
@@ -49,13 +49,13 @@ const Detail: React.FC = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (book) {
-      const isFav = favorites.some(
-        (favBook) => favBook.name === book.name || favBook.url === book.url
+    if (booksSelected) {
+      const isFav = favoriteBooks.some(
+        (favBook) => favBook.name === booksSelected.name || favBook.url === booksSelected.url
       );
       setIsFavorite(isFav);
     }
-  }, [book, favorites]);
+  }, [booksSelected, favoriteBooks]);
 
   useEffect(() => {
     setImageUrl("https://picsum.photos/400/600?random=1");
@@ -68,7 +68,7 @@ const Detail: React.FC = () => {
     return <div>Cargando...</div>;
   }
 
-  if (!book) {
+  if (!booksSelected) {
     return <div>No se encontró el libro.</div>;
   }
 
@@ -79,7 +79,7 @@ const Detail: React.FC = () => {
         <div className="lg:w-1/3 mb-6 lg:mb-0">
           <img
             src={imageUrl}
-            alt={book.name}
+            alt={booksSelected.name}
             className="w-full h-auto rounded-lg"
           />
         </div>
@@ -87,7 +87,7 @@ const Detail: React.FC = () => {
         {/* Información del libro */}
         <div className="lg:w-2/3 lg:pl-6">
           <h1 className="text-3xl font-semibold text-gray-800 mb-2">
-            {book.name}
+            {booksSelected.name}
           </h1>
           <p className="text-lg text-gray-600 mb-4">{description}</p>
 

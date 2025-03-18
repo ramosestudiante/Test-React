@@ -1,12 +1,11 @@
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../redux/types";
+import {  useDispatch } from "react-redux";
 import { removeFromFavorites } from "../redux/books/reducers"; // Asegúrate de tener estas acciones en tu redux
 import Table from "../components/Table";
+import { useBooks } from "../hooks/useBooks";
 
 export const Favorites = () => {
   const dispatch = useDispatch();
-  const favoriteBooks = useSelector((store: RootState) => store.books.favorites);
-
+const {favoriteBooks} = useBooks();
 
   const handleRemoveFromFavorites = (name: string) => {
     const book = favoriteBooks.find(book => book.name === name);

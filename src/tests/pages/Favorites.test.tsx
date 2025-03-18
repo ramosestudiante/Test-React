@@ -27,6 +27,8 @@ const store = configureStore({
             results: [],
             filterQuery: "",
           },
+          error:'',
+          loading:false,
           isFetching: false,
           selectedBook: null,
           favorites: favoriteBooks,

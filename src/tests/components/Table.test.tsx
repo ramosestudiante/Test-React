@@ -1,30 +1,53 @@
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import DataTable from "../../components/Table"; // Adjust the import based on your project structure
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import DataTable from "../../components/Table"; // Ajusta la importación según la estructura de tu proyecto
+import { createStore } from "redux";
 
-const mockBooks = [
-  { id: 1, author: "Gabriel García Márquez", title: "papelucho", detail: "Un clásico" },
-  { id: 2, author: "Julio Cortázar", title: "Rayuela", detail: "Novela" },
-];
+const mockState = {
+  books: {
+    books: {
+      results: [
+        {
+          id: 1,
+          author: "Gabriel García Márquez",
+          title: "Papelucho",
+          detail: "Un clásico",
+        },
+        { id: 2, author: "Julio Cortázar", title: "Rayuela", detail: "Novela" },
+      ],
+    },
+    favorites: [],
+  },
+};
+
+// Reducer simulado para crear el store
+const mockReducer = (state = mockState) => state;
+
+const store = createStore(mockReducer);
 
 describe("DataTable Component", () => {
   it("renders the table correctly", () => {
     render(
-      <BrowserRouter>
-        <DataTable data={mockBooks} loading={false} favorites={[]} />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <DataTable data={mockState.books.books.results} loading={false} />
+        </BrowserRouter>
+      </Provider>
     );
 
-    expect(screen.getByText("papelucho")).toBeInTheDocument();
+    expect(screen.getByText("Papelucho")).toBeInTheDocument();
     expect(screen.getByText("Rayuela")).toBeInTheDocument();
   });
 
   it("shows a loading state", () => {
     render(
-      <BrowserRouter>
-        <DataTable data={[]} loading={true} favorites={[]} />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <DataTable data={mockState.books.books.results} loading={true} />
+        </BrowserRouter>
+      </Provider>
     );
 
     expect(screen.getByText("Cargando...")).toBeInTheDocument();
@@ -32,9 +55,11 @@ describe("DataTable Component", () => {
 
   it("shows a message when there are no books", () => {
     render(
-      <BrowserRouter>
-        <DataTable data={[]} loading={false} favorites={[]} />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <DataTable data={[]} loading={false} />
+        </BrowserRouter>
+      </Provider>
     );
 
     expect(screen.getByText("No hay libros disponibles.")).toBeInTheDocument();
@@ -42,9 +67,11 @@ describe("DataTable Component", () => {
 
   it("sorts books when clicking the title header", () => {
     render(
-      <BrowserRouter>
-        <DataTable data={mockBooks} loading={false} favorites={[]} />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <DataTable data={mockState.books.books.results} loading={false} />
+        </BrowserRouter>
+      </Provider>
     );
 
     const titleHeader = screen.getByText("Título");
@@ -57,41 +84,43 @@ describe("DataTable Component", () => {
     const mockAddToFavorites = jest.fn();
 
     render(
-      <BrowserRouter>
-        <DataTable
-          data={mockBooks}
-          loading={false}
-          favorites={[]}
-          onAddToFavorites={mockAddToFavorites}
-        />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <DataTable
+            data={mockState.books.books.results}
+            loading={false}
+            onAddToFavorites={mockAddToFavorites}
+          />
+        </BrowserRouter>
+      </Provider>
     );
 
     const favoriteButton = screen.getAllByLabelText("Agregar a favoritos")[0];
+
     fireEvent.click(favoriteButton);
 
-    expect(mockAddToFavorites).toHaveBeenCalledWith("papelucho");
+    expect(mockAddToFavorites).toHaveBeenCalledWith("Papelucho");
   });
 
-  it("removes a book from favorites", async() => {
+  it("removes a book from favorites", async () => {
     const mockRemoveFromFavorites = jest.fn();
 
     render(
-      <BrowserRouter>
-        <DataTable
-          data={mockBooks}
-          loading={false}
-          favorites={mockBooks}
-          isFavoritesView={true}
-          onRemoveFromFavorites={mockRemoveFromFavorites}
-        />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <DataTable
+            data={mockState.books.books.results}
+            loading={false}
+            onRemoveFromFavorites={mockRemoveFromFavorites}
+            isFavoritesView={true}
+          />
+        </BrowserRouter>
+      </Provider>
     );
 
     const removeButtons = await screen.findAllByTestId("remove-button");
-    fireEvent.click(removeButtons[0]); // Click en el primer botón
-    
+    fireEvent.click(removeButtons[0]);
 
-    expect(mockRemoveFromFavorites).toHaveBeenCalledWith("papelucho");
+    expect(mockRemoveFromFavorites).toHaveBeenCalledWith("Papelucho");
   });
 });

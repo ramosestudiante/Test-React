@@ -1,4 +1,9 @@
 # Proyecto React con TypeScript, Vite y Tailwind CSS
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+
 
 Este es un proyecto de Prueba Frontend que utiliza **React**, **TypeScript**, **Vite** y **Tailwind CSS** como tecnologías principales.
 
@@ -15,29 +20,41 @@ Sigue estos pasos para configurar el proyecto localmente.
 
 1. **Clona el repositorio:**
 
-   ```bash
+   ```
+
    git clone https://github.com/ramosestudiante/Test-React.git
    cd tu-repositorio
+   
+   ```
 
 2. **Copia el .env.example:**
 
    ```
+
    copia el contenido del archivo a un archivo que crees que sea .env
+   
+   ```
 
 3. **Inicia el proyecto con:**
 
    Para instalar todas las dependencias:
    ```
+
    npm i
+   
    ```
 
    Para levantar el proyecto:
    ```
+
    npm run dev 
+   
    ```
 
 
-## Inicia con Docker
+## Inicia el proyecto con: 
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+
 
  **En el proyecto hay un makeFile:**
 
@@ -46,12 +63,41 @@ Sigue estos pasos para configurar el proyecto localmente.
    incias el contenedor de docker para este proyecto
    el cual instala las dependencias que estan en el proyecto y con la version de node utilizada
    ```
+
    make run-local 
+   
    ```
+
+
+## ![Storybook](https://img.shields.io/badge/Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white)
+
+```
+
+npm run storybook
+
+```
+
+
+## 🧪 Testing 
+![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
+
+Estas pruebas aseguran que los componentes de la aplicación se comporten de manera esperada.
+Este Testing esta hecho con Jest.
+
+```
+
+npm test Home.test.tsx
+npm test Favorites.test.tsx
+npm test Detail.test.tsx
+npm test Search.test.tsx
+npm test Table.test.tsx
+
+```
 
 ## 📂 Estructura de Carpetas
 
 ```
+
 📦 Proyecto
 ├── 📂 src
 │   ├── 📂 components      # 🧩 Componentes reutilizables
@@ -72,6 +118,7 @@ Sigue estos pasos para configurar el proyecto localmente.
 ├── 📜 package.json        # 📦 Dependencias y scripts del proyecto
 ├── 📜 README.md           # 📃 Documentación del proyecto
 └── 📜 .gitignore          # 🙈 Archivos a ignorar en Git
+
 ```
 
 ## Decisiones Técnicas y Arquitectónicas
