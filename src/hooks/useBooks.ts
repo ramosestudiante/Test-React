@@ -5,14 +5,22 @@ import { useEffect, useMemo } from "react";
 
 export const useBooks = () => {
   const dispatch = useDispatch();
-  const { books, loading, error } = useSelector((store: RootState) => store.books);
-  
-  // Ensure books is defined before destructuring filterQuery
-  const filterQuery = books ? books.filterQuery : '';
+  const { books, loading, error } = useSelector(
+    (store: RootState) => store.books
+  );
 
-  const booksAll = useMemo(() => (Array.isArray(books?.data) ? books.data : []), [books?.data]);
-  const favoriteBooks = useSelector((store: RootState) => store.books.favorites);
-  const booksSelected = useSelector((store: RootState) => store.books.selectedBook);
+  const filterQuery = books ? books.filterQuery : "";
+
+  const booksAll = useMemo(
+    () => (Array.isArray(books?.data) ? books.data : []),
+    [books?.data]
+  );
+  const favoriteBooks = useSelector(
+    (store: RootState) => store.books.favorites
+  );
+  const booksSelected = useSelector(
+    (store: RootState) => store.books.selectedBook
+  );
 
   useEffect(() => {
     dispatch(getBooks({}));
@@ -32,5 +40,13 @@ export const useBooks = () => {
     );
   }, [booksAll, filterQuery]);
 
-  return { booksAll, filteredBooks, loading, error, fetchBooks, favoriteBooks, booksSelected };
+  return {
+    booksAll,
+    filteredBooks,
+    loading,
+    error,
+    fetchBooks,
+    favoriteBooks,
+    booksSelected,
+  };
 };

@@ -27,10 +27,10 @@ const DataTable: React.FC<DataTableProps> = ({
   onAddToFavorites,
   onRemoveFromFavorites,
 }) => {
-  const {sortBy, handleSort} = useSortTable({ id: "title", desc: false });
+  const { sortBy, handleSort } = useSortTable({ id: "title", desc: false });
 
   const { favorites } = useFavorites();
-  
+
   const sortedData = useMemo(() => {
     return [...data].sort((a, b) => {
       const aValue = a[sortBy.id as keyof Book];
@@ -104,13 +104,6 @@ const DataTable: React.FC<DataTableProps> = ({
       },
       useSortBy
     );
-
-  // const handleSort = (columnId: string) => {
-  //   setSortBy((prev) => ({
-  //     id: columnId,
-  //     desc: prev.id === columnId ? !prev.desc : false,
-  //   }));
-  // };
 
   return (
     <div className="p-4 overflow-x-auto">

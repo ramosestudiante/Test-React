@@ -17,7 +17,7 @@ const Detail: React.FC = () => {
   const [synopsis, setSynopsis] = useState("");
   const [rating, setRating] = useState(0);
 
-  const { booksSelected,favoriteBooks } = useBooks();
+  const { booksSelected, favoriteBooks } = useBooks();
 
   const toggleFavorite = () => {
     if (!booksSelected) return;
@@ -51,7 +51,9 @@ const Detail: React.FC = () => {
   useEffect(() => {
     if (booksSelected) {
       const isFav = favoriteBooks.some(
-        (favBook) => favBook.name === booksSelected.name || favBook.url === booksSelected.url
+        (favBook) =>
+          favBook.name === booksSelected.name ||
+          favBook.url === booksSelected.url
       );
       setIsFavorite(isFav);
     }

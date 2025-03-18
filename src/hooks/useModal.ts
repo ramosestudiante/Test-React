@@ -9,7 +9,9 @@ export const useModal = () => {
     publicationDate: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setNewBook((prev) => ({ ...prev, [name]: value }));
   };

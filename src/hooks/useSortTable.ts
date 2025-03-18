@@ -15,7 +15,6 @@ const useSortTable = (initialSortBy: SortBy) => {
     }));
   }, []);
 
-
   return { sortBy, handleSort };
 };
 

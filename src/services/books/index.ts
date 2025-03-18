@@ -31,7 +31,11 @@ export default class ApiBooks {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`Error ${response.status}: ${errorData.message || response.statusText}`);
+        throw new Error(
+          `Error ${response.status}: ${
+            errorData.message || response.statusText
+          }`
+        );
       }
 
       return await response.json();
@@ -41,14 +45,17 @@ export default class ApiBooks {
     }
   }
 
-public async getBooks(params: { name?: string; author?: string } = {}): Promise<Book[]> {
-  const queryString = new URLSearchParams(params as Record<string, string>).toString();
-  const url = queryString ? `books?${queryString}` : "books";
-  return this.request<Book[]>(url);
-}
+  public async getBooks(
+    params: { name?: string; author?: string } = {}
+  ): Promise<Book[]> {
+    const queryString = new URLSearchParams(
+      params as Record<string, string>
+    ).toString();
+    const url = queryString ? `books?${queryString}` : "books";
+    return this.request<Book[]>(url);
+  }
 
-public async getBookById(id: number): Promise<Book> {
-  return this.request<Book>(`/books/${id}`);
-}
-
+  public async getBookById(id: number): Promise<Book> {
+    return this.request<Book>(`/books/${id}`);
+  }
 }
