@@ -9,14 +9,14 @@ Este es un proyecto de Prueba Frontend que utiliza **React**, **TypeScript**, **
 
 ## Requisitos
 
-Asegúrate de tener instalados los siguientes programas en tu máquina:
+**Asegúrate de tener instalados los siguientes programas en tu máquina:**
 
 - [Node.js](https://nodejs.org/) (versión 14 o superior)
 - [npm](https://www.npmjs.com/) o [yarn](https://yarnpkg.com/) (gestor de paquetes)
 
 ## Instalación
 
-Sigue estos pasos para configurar el proyecto localmente.
+**Sigue estos pasos para configurar el proyecto localmente.**
 
 1. **Clona el repositorio:**
 
@@ -68,6 +68,13 @@ Sigue estos pasos para configurar el proyecto localmente.
    
    ```
 
+**Tambien contiene el script de testing**
+```
+
+make tests
+
+```
+
 
 ## ![Storybook](https://img.shields.io/badge/Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white)
 
@@ -81,8 +88,7 @@ npm run storybook
 ## 🧪 Testing 
 ![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
 
-Estas pruebas aseguran que los componentes de la aplicación se comporten de manera esperada.
-Este Testing esta hecho con Jest.
+**Estas pruebas aseguran que los componentes de la aplicación se comporten de manera esperada. Este Testing esta hecho con Jest.**
 
 ```
 
@@ -91,6 +97,12 @@ npm test Favorites.test.tsx
 npm test Detail.test.tsx
 npm test Search.test.tsx
 npm test Table.test.tsx
+
+```
+#### De forma Global
+```
+
+npm test
 
 ```
 

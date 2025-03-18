@@ -85,7 +85,7 @@ describe("Detail", () => {
       </Provider>
     );
 
-    // Verifica que el botón diga 'Eliminar de Favoritos' si el libro ya está en favoritos
+    // Verifica si el boton esta en 'Eliminar de Favoritos'
     const favoriteButton = screen.getByRole("button", {
       name: "Eliminar de Favoritos",
     });

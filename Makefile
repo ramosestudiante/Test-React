@@ -13,6 +13,8 @@ rm-local:
 rm-local:
 	@docker compose -f ./docker/docker-compose.local.yml --project-directory ./ -p portafolio_react down -v --remove-orphans
 
+tests:
+	npm test
 # git flow
 
 prod\:release:

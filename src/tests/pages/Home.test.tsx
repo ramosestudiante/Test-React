@@ -61,10 +61,11 @@ jest.mock("../../hooks/useBooks", () => ({
 }));
 
 jest.mock("../../hooks/useFavorites", () => ({
-  useFavorites: jest.fn().mockReturnValue({
-    handleAddToFavorites: jest.fn((book) =>
-      store.dispatch({ type: "books/addToFavorites", payload: book })
-    ),
+  __esModule: true,
+  default: jest.fn().mockReturnValue({
+    favorites: [],
+    isFavorite: jest.fn(() => false),
+    handleAddToFavorites: jest.fn(),
   }),
 }));
 

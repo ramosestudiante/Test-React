@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import DataTable from "../../components/Table"; // Ajusta la importación según la estructura de tu proyecto
+import DataTable from "../../components/Table";
 import { createStore } from "redux";
 
 const mockState = {
@@ -22,7 +22,6 @@ const mockState = {
   },
 };
 
-// Reducer simulado para crear el store
 const mockReducer = (state = mockState) => state;
 
 const store = createStore(mockReducer);

@@ -7,7 +7,7 @@ import { Book } from "../redux/books/types";
 import Modal from "../components/Modal";
 import { useBooks } from "../hooks/useBooks";
 import { useModal } from "../hooks/useModal";
-import { useFavorites } from "../hooks/useFavorites";
+import useFavorites from "../hooks/useFavorites";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -17,7 +17,7 @@ export const Home: React.FC<LayoutProps> = () => {
   const dispatch = useDispatch();
   const { filteredBooks, loading, error, fetchBooks } = useBooks();
   const { open, setOpen, handleChange, handleSubmit } = useModal();
-  const { handleAddToFavorites } = useFavorites();
+  const { handleAddToFavorites } = useFavorites()||{};
 
   const handleSelect = (book: Book) => {
     dispatch(
